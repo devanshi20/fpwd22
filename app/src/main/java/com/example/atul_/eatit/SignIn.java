@@ -10,11 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
 
 import com.example.atul_.eatit.Common.Common;
 import com.example.atul_.eatit.model.User;
@@ -24,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
+
+import java.security.AccessController;
 
 import io.paperdb.Paper;
 
@@ -64,11 +70,15 @@ public class SignIn extends AppCompatActivity {
         return valid;
     }
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+
 
 
         edtPassword = (EditText) findViewById(R.id.edtpassword);
@@ -79,6 +89,8 @@ public class SignIn extends AppCompatActivity {
         txtForgotPwd = (TextView) findViewById(R.id.txtForgotPwd);
         btnSignUp = (TextView) findViewById(R.id.btnSignUp);
 
+
+
         Paper.init(this);
 
 
@@ -87,6 +99,10 @@ public class SignIn extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         table_user = database.getReference("User");
+        Animation animation;
+        animation = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.sample_animation);
+
 
         txtForgotPwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +113,10 @@ public class SignIn extends AppCompatActivity {
 
         });
 
-
+btnSignIn.setAnimation(animation);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
+
+
             @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
             @Override
             public void onClick(View view) {

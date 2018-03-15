@@ -12,7 +12,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 import com.example.atul_.eatit.model.Order;
 import com.google.firebase.database.ValueEventListener;
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 
 import java.util.ArrayList;
@@ -170,6 +169,8 @@ public class Database extends SQLiteOpenHelper {
         String query=String.format("DELETE FROM Favorites WHERE FoodId='%s';",foodId);
         db.execSQL(query);
     }
+
+
 
     public void getAData(){
         SQLiteDatabase db = this.getWritableDatabase();
