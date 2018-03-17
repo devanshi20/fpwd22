@@ -41,6 +41,7 @@ public class FoodList extends AppCompatActivity {
     FirebaseRecyclerAdapter<Food,FoodViewHolder> adapter;
     Database localDB;
 
+
     FirebaseRecyclerAdapter<Food,FoodViewHolder> searchadapter;
     List<String> suggestList=new ArrayList<>();
     MaterialSearchBar materialSearchBar;
@@ -188,6 +189,7 @@ public class FoodList extends AppCompatActivity {
                             localDB.addToFavorites(adapter.getRef(position).getKey());
                             viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
                             Toast.makeText(FoodList.this,""+model.getName()+"was added to favorites",Toast.LENGTH_SHORT).show();
+                            localDB.takeFav();
 
                         }
                         else

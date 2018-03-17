@@ -194,6 +194,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             Intent i=new Intent(Home.this,OrderStatus.class);
             startActivity(i);
 
+        } else if (id == R.id.nav_fav) {
+            Intent i=new Intent(Home.this,FavoritesActivity.class);
+            startActivity(i);
+
         }
 
 

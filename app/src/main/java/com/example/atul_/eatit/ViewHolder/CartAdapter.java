@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.atul_.eatit.Interface.ItemClickListener;
 import com.example.atul_.eatit.R;
+import com.example.atul_.eatit.model.Favorites;
 import com.example.atul_.eatit.model.Order;
 
 import org.w3c.dom.Text;
