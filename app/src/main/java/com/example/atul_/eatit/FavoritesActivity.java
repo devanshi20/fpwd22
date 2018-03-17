@@ -62,11 +62,12 @@ public class FavoritesActivity extends AppCompatActivity {
     }
 
     private void loadListFav() {
-
         fav = new Database(this).getFav();
         adapter = new FavoritesAdapter(this,fav);
         recyclerView.setAdapter(adapter);
-       
+
+
 
     }
+
 }

@@ -20,10 +20,14 @@ import java.util.List;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesViewHolder> {
 
-    private Context context;
+    Context context;
     private List<Favorites> favoritesList;
 
     public FavoritesAdapter(FavoritesActivity favoritesActivity, List<Favorites> allFavorites) {
+
+        this.favoritesList = allFavorites;
+        this.context=favoritesActivity;
+
     }
 
     @Override

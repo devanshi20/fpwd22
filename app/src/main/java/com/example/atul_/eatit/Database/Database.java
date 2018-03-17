@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 import com.example.atul_.eatit.model.Favorites;
 import com.example.atul_.eatit.model.Order;
@@ -30,7 +31,7 @@ import static android.R.attr.name;
 public class Database extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "EatIt.db";
 
     public static SQLiteDatabase db;
@@ -160,8 +161,10 @@ public class Database extends SQLiteOpenHelper {
     public void addToFavorites(String foodId)
     {
         SQLiteDatabase db=getReadableDatabase();
-        String query=String.format("INSERT INTO Favorites(FoodId) VALUES(%s);",foodId);
-        db.execSQL(query);
+        ContentValues values=new ContentValues();
+
+        values.put("FoodId",foodId);
+        db.insert("Favorites",null,values);
     }
 
     public void removeFromFavorites(String foodId)
@@ -232,6 +235,7 @@ public class Database extends SQLiteOpenHelper {
         {
             do{
                 result.add(new Favorites(c.getString(c.getColumnIndex("FoodId"))));
+                Log.e("result",result.toString());
 
             }while(c.moveToNext());
         }
