@@ -20,13 +20,13 @@
     <LinearLayout
         android:id="@+id/view_foreground"
         android:layout_margin="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/cardview_light_background"
         android:orientation="vertical"
         android:weightSum="5"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/food_image"
+        <TextView
+            android:id="@+id/food_id"
             android:scaleType="centerCrop"
             android:src="@drawable/bg"
             android:layout_width="match_parent"

@@ -16,7 +16,7 @@ import com.example.atul_.eatit.R;
 
 public class FavoritesViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public ImageView food_image;
+    public TextView food_id;
     public Object quick_cart;
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -31,7 +31,7 @@ public class FavoritesViewHolder  extends RecyclerView.ViewHolder implements Vie
     public FavoritesViewHolder(View itemView) {
         super(itemView);
 
-        food_image= (ImageView)itemView.findViewById(R.id.food_image);
+        food_id= (TextView)itemView.findViewById(R.id.food_id);
 
 
         view_background=(RelativeLayout)itemView.findViewById(R.id.view_background);
