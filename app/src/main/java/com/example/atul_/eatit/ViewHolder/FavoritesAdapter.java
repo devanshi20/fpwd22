@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.atul_.eatit.FavoritesActivity;
 import com.example.atul_.eatit.R;
@@ -22,6 +23,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesViewHolder> 
 
     Context context;
     private List<Favorites> favoritesList;
+    TextView f;
+
 
     public FavoritesAdapter(FavoritesActivity favoritesActivity, List<Favorites> allFavorites) {
 
@@ -34,14 +37,23 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesViewHolder> 
     public FavoritesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(context)
                 .inflate(R.layout.favorites_item,parent,false);
+
+
+
+         f=(TextView)itemView.findViewById(R.id.food_id);
         return new FavoritesViewHolder(itemView);
+
     }
+
 
     @Override
     public void onBindViewHolder(FavoritesViewHolder viewHolder, int position) {
 
 
         Picasso.with(context).load(favoritesList.get(position).getFoodId());
+
+
+f.setText(favoritesList.get(position).getFoodId());
 
     }
 
