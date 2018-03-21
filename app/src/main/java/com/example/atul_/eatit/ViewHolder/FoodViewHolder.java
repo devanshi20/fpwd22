@@ -30,6 +30,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         fav_image= (ImageView)itemView.findViewById(R.id.fav);
         food_price=(TextView) itemView.findViewById(R.id.food_price);
 
+
         itemView.setOnClickListener(this);
     }
 

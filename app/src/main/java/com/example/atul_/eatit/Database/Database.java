@@ -31,7 +31,7 @@ import static android.R.attr.name;
 public class Database extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "EatIt.db";
 
     public static SQLiteDatabase db;
@@ -61,7 +61,9 @@ public class Database extends SQLiteOpenHelper {
                 "Quantity INTEGER," +
                 "Discount INTEGER);");
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS Favorites(FoodId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Favorites(FoodId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"+
+                "FoodName TEXT,"+
+                "FoodPrice TEXT);");
 
 
 
@@ -158,13 +160,15 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void addToFavorites(String foodId)
+    public void addToFavorites(Favorites food)
     {
         SQLiteDatabase db=getReadableDatabase();
-        ContentValues values=new ContentValues();
+        String query = String.format("INSERT INTO Favorites(FoodId,FoodName,FoodPrice) VALUES('%s','%s','%s');",
+                food.getFoodId(),
+                food.getFoodName(),
+                food.getFoodPrice());
 
-        values.put("FoodId",foodId);
-        db.insert("Favorites",null,values);
+        db.execSQL(query);
     }
 
     public void removeFromFavorites(String foodId)
@@ -220,7 +224,7 @@ public class Database extends SQLiteOpenHelper {
         //SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSelect={"FoodId"};
+        String[] sqlSelect={"FoodId","FoodName","FoodPrice"};
         String sqlTable="Favorites";
 
 
@@ -234,7 +238,9 @@ public class Database extends SQLiteOpenHelper {
         if(c.moveToFirst())
         {
             do{
-                result.add(new Favorites(c.getString(c.getColumnIndex("FoodId"))));
+                result.add(new Favorites(c.getString(c.getColumnIndex("FoodId")),
+                        c.getString(c.getColumnIndex("FoodName")),
+                        c.getString(c.getColumnIndex("FoodPrice"))));
                 Log.e("result",result.toString());
 
             }while(c.moveToNext());

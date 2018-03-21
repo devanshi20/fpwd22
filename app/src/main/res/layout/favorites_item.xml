@@ -24,15 +24,36 @@
         android:orientation="vertical"
         android:weightSum="5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/food_id"
             android:scaleType="centerCrop"
             android:src="@drawable/bg"
+            android:hint="foodid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
             android:contentDescription="Menu" />
+        <TextView
+            android:id="@+id/food_name"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg"
+            android:hint="foodname"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:contentDescription="Menu" />
+        <TextView
+            android:id="@+id/food_price"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg"
+            android:hint="foodPrice"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:contentDescription="Menu" />
+
 
         <LinearLayout
             android:layout_margin="10dp"

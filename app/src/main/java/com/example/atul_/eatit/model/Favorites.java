@@ -7,15 +7,41 @@ package com.example.atul_.eatit.model;
 public class Favorites {
 
     private String FoodId;
+    private  String FoodName;
+    private String FoodPrice;
+
 
     public Favorites()
     {
 
     }
 
-    public Favorites(String foodId)
+    public String getFoodName() {
+        return FoodName;
+    }
+
+    public void setFoodName(String foodName) {
+        FoodName = foodName;
+    }
+
+    public String getFoodPrice() {
+        return FoodPrice;
+    }
+
+    public void setFoodPrice(String foodPrice) {
+        FoodPrice = foodPrice;
+    }
+
+
+
+    public Favorites(String foodId, String foodName, String foodPrice)
     {
         FoodId=foodId;
+        FoodName=foodName;
+        FoodPrice=foodPrice;
+
+
+
     }
 
     public String getFoodId() {

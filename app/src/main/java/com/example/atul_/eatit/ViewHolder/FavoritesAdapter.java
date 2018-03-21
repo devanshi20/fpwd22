@@ -23,7 +23,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesViewHolder> 
 
     Context context;
     private List<Favorites> favoritesList;
-    TextView f;
+    TextView f,fname,fprice;
 
 
     public FavoritesAdapter(FavoritesActivity favoritesActivity, List<Favorites> allFavorites) {
@@ -41,6 +41,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesViewHolder> 
 
 
          f=(TextView)itemView.findViewById(R.id.food_id);
+        fname=(TextView)itemView.findViewById(R.id.food_name);
+        fprice=(TextView)itemView.findViewById(R.id.food_price);
         return new FavoritesViewHolder(itemView);
 
     }
@@ -51,9 +53,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesViewHolder> 
 
 
         Picasso.with(context).load(favoritesList.get(position).getFoodId());
-
+        Picasso.with(context).load(favoritesList.get(position).getFoodName());
+        Picasso.with(context).load(favoritesList.get(position).getFoodPrice());
 
 f.setText(favoritesList.get(position).getFoodId());
+        fname.setText(favoritesList.get(position).getFoodName());
+
+        fprice.setText(favoritesList.get(position).getFoodPrice());
 
     }
 
