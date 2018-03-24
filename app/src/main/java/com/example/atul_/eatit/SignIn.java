@@ -109,30 +109,28 @@ public class SignIn extends AppCompatActivity {
                 setContentView(R.layout.forgot_password_layout);
 
                 final MaterialEditText edtPhone = (MaterialEditText) findViewById(R.id.edtphone);
-                final MaterialEditText edtSecureCode = (MaterialEditText) findViewById(R.id.edtSecureCode);
+                final MaterialEditText edtEmail = (MaterialEditText) findViewById(R.id.edtMail);
                 fbtn=(Button)findViewById(R.id.fbtn);
-                Log.i("Send email", "");
 
-                String[] TO = {"devanshimadhani20@gmail.com"};
-               // String[] CC = {"mcmohd@gmail.com"};
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
+                fbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+                        String sub = edtPhone.getText().toString();
+                        String to = edtEmail.getText().toString();
 
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-               // emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-                    finish();
-                    Log.i("Finished sending email...", "");
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(SignIn.this,
-                            "There is no email client installed.", Toast.LENGTH_SHORT).show();
-                }
+                        Toast.makeText(SignIn.this, "Your request is accepted you will receive a mail!!", Toast.LENGTH_SHORT).show();
+                        try {
+                            GMailSender sender = new GMailSender("devanshimadhani20@gmail.com", "password");
+                            sender.sendMail("This is Subject",
+                                    "This is Body",
+                                    "user@gmail.com",
+                                    "user@yahoo.com");
+                        } catch (Exception e) {
+                            Log.e("SendMail", e.getMessage(), e);
+                        }
+                    }
+                });
 
 
 
