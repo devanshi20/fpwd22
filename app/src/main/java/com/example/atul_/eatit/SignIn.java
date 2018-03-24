@@ -3,11 +3,13 @@ package com.example.atul_.eatit;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LayoutAnimationController;
@@ -30,19 +32,20 @@ import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.security.AccessController;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.paperdb.Paper;
 
 public class SignIn extends AppCompatActivity {
     EditText edtPhone, edtPassword;
-    Button btnSignIn;
+    Button btnSignIn,fbtn;
     TextView btnSignUp;
     CheckBox ckbRemember;
     TextView txtForgotPwd;
     ProgressDialog progressDialog;
     DatabaseReference table_user;
     FirebaseDatabase database;
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -71,14 +74,11 @@ public class SignIn extends AppCompatActivity {
     }
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
-
 
 
         edtPassword = (EditText) findViewById(R.id.edtpassword);
@@ -88,7 +88,6 @@ public class SignIn extends AppCompatActivity {
         ckbRemember = (CheckBox) findViewById(R.id.ckbRemember);
         txtForgotPwd = (TextView) findViewById(R.id.txtForgotPwd);
         btnSignUp = (TextView) findViewById(R.id.btnSignUp);
-
 
 
         Paper.init(this);
@@ -107,13 +106,50 @@ public class SignIn extends AppCompatActivity {
         txtForgotPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showForgotpwdDialog();
+                setContentView(R.layout.forgot_password_layout);
+
+                final MaterialEditText edtPhone = (MaterialEditText) findViewById(R.id.edtphone);
+                final MaterialEditText edtSecureCode = (MaterialEditText) findViewById(R.id.edtSecureCode);
+                fbtn=(Button)findViewById(R.id.fbtn);
+                Log.i("Send email", "");
+
+                String[] TO = {"devanshimadhani20@gmail.com"};
+               // String[] CC = {"mcmohd@gmail.com"};
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+
+
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+               // emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                    finish();
+                    Log.i("Finished sending email...", "");
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(SignIn.this,
+                            "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
+
             }
+
+
 
 
         });
 
-btnSignIn.setAnimation(animation);
+
+
+
+        btnSignIn.setAnimation(animation);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
 
 
@@ -132,7 +168,7 @@ btnSignIn.setAnimation(animation);
                     validate();
                     final ProgressDialog mDialog = new ProgressDialog(SignIn.this);
                     mDialog.setMessage("Please wait");
-                   mDialog.show();
+                    mDialog.show();
 
 
                     table_user.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -179,92 +215,30 @@ btnSignIn.setAnimation(animation);
         {
 
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignUp.class);
                 startActivity(intent);
             }
         });
 
-        String user=Paper.book().read(Common.USER_KEY);
-        String pwd=Paper.book().read(Common.PWD_KEY);
+        String user = Paper.book().read(Common.USER_KEY);
+        String pwd = Paper.book().read(Common.PWD_KEY);
 
-        if (user !=null && pwd!=null){
+        if (user != null && pwd != null) {
 
             if (!user.isEmpty() && !pwd.isEmpty()) {
                 Intent home = new Intent(SignIn.this, Home.class);
 
-                 startActivity(home);
+                startActivity(home);
+
+
+            }
 
 
         }
-
-
-    }}
-
-
-
-    private void showForgotpwdDialog() {
-
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setTitle("Forgot Password");
-        builder.setMessage("Enter your secure code");
-
-        LayoutInflater inflater=this.getLayoutInflater();
-        View forgot_view=inflater.inflate(R.layout.forgot_password_layout,null);
-        builder.setView(forgot_view);
-        builder.setIcon(R.drawable.ic_security_black_24dp);
-
-        final MaterialEditText edtPhone=(MaterialEditText)forgot_view.findViewById(R.id.edtphone);
-        final MaterialEditText edtSecureCode=(MaterialEditText)forgot_view.findViewById(R.id.edtSecureCode);
-
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                 table_user.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
-
-                        String sc=edtSecureCode.getText().toString();
-
-                        if (sc.equals(user.getSecureCode())) {
-                            Toast.makeText(SignIn.this, "Your password:" + user.getPassword(), Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(SignIn.this, "Wrong secure code", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-            }
-        });
-
-        builder.setNegativeButton("No",new DialogInterface.OnClickListener(){
-
-            @Override
-
-            public  void onClick(DialogInterface dialogInterface,int i)
-            {
-
-            }
-
-
-        });
-
-
-        builder.show();
-
-       
-
-
     }
 }
+
 
 
